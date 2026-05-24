@@ -235,6 +235,12 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // 6. Mobile Sidebar Setup
   setupMobileSidebar();
+
+  // 7. Restore Sidebar Collapse State
+  restoreSidebarState();
+
+  // 8. Show Terms of Service once per user
+  showTOSOnce();
 });
 
 function resetDashboardState() {
@@ -1074,6 +1080,26 @@ function closeTOS() {
   document.getElementById("tosModal").classList.replace("flex", "hidden");
 }
 
+function getCurrentUsername() {
+  return localStorage.getItem("current_user") || sessionStorage.getItem("current_user") || "default";
+}
+
+function getTosStorageKey() {
+  const username = getCurrentUsername();
+  return `tos_accepted_${username}`;
+}
+
+function acceptTOS() {
+  localStorage.setItem(getTosStorageKey(), "true");
+  closeTOS();
+}
+
+function showTOSOnce() {
+  if (localStorage.getItem(getTosStorageKey()) !== "true") {
+    showTOS();
+  }
+}
+
 async function checkApiStatus() {
   const indicator = document.getElementById("apiStatusIndicator");
   if (!indicator) return;
@@ -1231,4 +1257,38 @@ function setupMobileSidebar() {
       }
     });
   });
+}
+
+// ─── SIDEBAR COLLAPSE/EXPAND (DESKTOP) ───────────────────────────────────
+
+function toggleSidebarCollapse() {
+  const sidebar = document.getElementById("sidebar");
+  if (!sidebar) return;
+  
+  const isCollapsed = sidebar.classList.contains("sidebar-collapsed");
+  
+  if (isCollapsed) {
+    sidebar.classList.remove("sidebar-collapsed");
+    sidebar.classList.add("sidebar-expanded");
+    localStorage.setItem("sidebar-collapsed", "false");
+  } else {
+    sidebar.classList.remove("sidebar-expanded");
+    sidebar.classList.add("sidebar-collapsed");
+    localStorage.setItem("sidebar-collapsed", "true");
+  }
+}
+
+function restoreSidebarState() {
+  const sidebar = document.getElementById("sidebar");
+  if (!sidebar) return;
+  
+  const isCollapsed = localStorage.getItem("sidebar-collapsed") === "true";
+  
+  if (isCollapsed) {
+    sidebar.classList.remove("sidebar-expanded");
+    sidebar.classList.add("sidebar-collapsed");
+  } else {
+    sidebar.classList.remove("sidebar-collapsed");
+    sidebar.classList.add("sidebar-expanded");
+  }
 }

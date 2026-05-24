@@ -189,6 +189,7 @@ async function handleLogin() {
     if (res.ok) {
       const data = await res.json();
       localStorage.setItem("access_token", data.access_token);
+      localStorage.setItem("current_user", u);
       if (loginBtn) {
         loginBtn.innerText = "UPLINK ESTABLISHED";
         loginBtn.classList.replace("bg-blue-600", "bg-emerald-600");
@@ -233,6 +234,7 @@ async function handleRegister() {
 
     if (res.ok) {
       localStorage.setItem("access_token", data.access_token);
+      localStorage.setItem("current_user", u);
       if (regBtn) {
         regBtn.innerText = "UPLINK ESTABLISHED";
         regBtn.classList.replace("bg-emerald-600", "bg-blue-600");

@@ -98,7 +98,7 @@ html[data-theme="light"] #sidebar .border-b {
 
 /* ── Header ──────────────────────────────────────────────────────────────── */
 header {
-  background: var(--bg-header) !important;
+  background: #0a1628 !important;
   border-color: var(--border-subtle) !important;
   transition: background 0.3s ease;
 }
@@ -787,6 +787,208 @@ html[data-theme="light"] #progressBarFill {
 @keyframes pulseText {
   0%, 100% { opacity: 1; }
   50%       { opacity: 0.4; }
+}
+
+/* ── Sidebar Collapse/Expand Animation ─────────────────────────────────── */
+@keyframes rotateChevron {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(180deg);
+  }
+}
+
+#sidebar {
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#sidebar.sidebar-expanded {
+  width: 16rem; /* w-64 */
+}
+
+#sidebar.sidebar-collapsed {
+  width: 5rem; /* w-20 */
+}
+
+.sidebar-header-content {
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+#sidebar.sidebar-collapsed .sidebar-header-content {
+  opacity: 0;
+  visibility: hidden;
+  width: 0;
+}
+
+.sidebar-toggle-btn i {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#sidebar.sidebar-collapsed .sidebar-toggle-btn i {
+  transform: rotate(180deg);
+}
+
+/* Hide text labels when collapsed */
+#sidebar.sidebar-collapsed .nav-item {
+  justify-content: center;
+  align-items: center;
+  width: 100% !important;
+  padding: 0.75rem !important;
+  gap: 0 !important;
+  font-size: 0 !important;
+  min-height: 2.75rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#sidebar.sidebar-collapsed .nav-item:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.25);
+  background: rgba(59, 130, 246, 0.15) !important;
+}
+
+#sidebar.sidebar-collapsed .nav-item.active {
+  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.35);
+}
+
+#sidebar.sidebar-collapsed .nav-item i {
+  font-size: 1rem !important;
+  margin: 0 !important;
+  width: auto !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.3s ease;
+}
+
+/* Reduce spacing in nav container - remove flex-1 to eliminate page slider */
+#sidebar.sidebar-collapsed .space-y-1 {
+  gap: 0.25rem !important;
+  flex: 0 0 auto !important;
+  flex-grow: 0 !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow-y: visible !important;
+}
+
+/* Hide all section headings */
+#sidebar.sidebar-collapsed > div > p {
+  display: none !important;
+}
+
+/* Hide case count badge */
+#sidebar.sidebar-collapsed #case-count-badge {
+  display: none !important;
+}
+
+/* Hide Terms of Service button and its container completely */
+#sidebar.sidebar-collapsed .px-2.mb-4 {
+  display: none !important;
+}
+
+/* Hide logout button text, show only icon - centered like nav items */
+#sidebar.sidebar-collapsed button[onclick="logout()"] {
+  justify-content: center;
+  align-items: center;
+  width: 100% !important;
+  gap: 0 !important;
+  padding: 0.75rem !important;
+  font-size: 0 !important;
+  min-height: 2.75rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-top: 1rem !important;
+}
+
+#sidebar.sidebar-collapsed button[onclick="logout()"]:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 8px 20px rgba(239, 68, 68, 0.25);
+  background: rgba(239, 68, 68, 0.15) !important;
+}
+
+#sidebar.sidebar-collapsed button[onclick="logout()"] i {
+  font-size: 1rem !important;
+  margin: 0 !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Adjust sidebar padding when collapsed */
+#sidebar.sidebar-collapsed {
+  padding: 1rem 0.75rem;
+}
+
+/* Reduce spacing in nav container */
+#sidebar.sidebar-collapsed .space-y-1 {
+  gap: 0.25rem !important;
+}
+
+/* Adjust sidebar padding and spacing when collapsed */
+#sidebar.sidebar-collapsed {
+  padding: 1rem 0.75rem;
+}
+
+#sidebar.sidebar-collapsed .space-y-1 {
+  gap: 0.5rem;
+  flex-grow: 0 !important;
+}
+
+/* Position toggle button appropriately */
+.sidebar-toggle-btn {
+  width: 32px;
+  height: 32px;
+  padding: 0.5rem;
+  flex-shrink: 0;
+}
+
+html[data-theme="light"] .sidebar-toggle-btn {
+  background: rgba(59, 130, 246, 0.14) !important;
+  border-color: rgba(59, 130, 246, 0.28) !important;
+  color: #ffffff !important;
+}
+
+html[data-theme="light"] .sidebar-toggle-btn i {
+  color: #ffffff !important;
+}
+
+html[data-theme="light"] .sidebar-toggle-btn:hover {
+  background: rgba(59, 130, 246, 0.2) !important;
+  border-color: rgba(37, 99, 235, 0.4) !important;
+}
+
+/* Light mode sidebar collapse styles */
+html[data-theme="light"] #sidebar.sidebar-collapsed {
+  background: #ffffff !important;
+  border-right: 1px solid #dde3ed !important;
+}
+
+html[data-theme="light"] #sidebar.sidebar-collapsed .nav-item {
+  border-left: none !important;
+  border-radius: 8px !important;
+}
+
+html[data-theme="light"] #sidebar.sidebar-collapsed .nav-item:hover {
+  background: #e0e9ff !important;
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.2) !important;
+  transform: translateY(-4px) scale(1.05) !important;
+}
+
+html[data-theme="light"] #sidebar.sidebar-collapsed .nav-item.active {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3) !important;
+}
+
+html[data-theme="light"] #sidebar.sidebar-collapsed button[onclick="logout()"]:hover {
+  background: #fee2e2 !important;
+  box-shadow: 0 8px 20px rgba(220, 38, 38, 0.2) !important;
+  transform: translateY(-4px) scale(1.05) !important;
+}
+
+/* Dark mode - match light mode animations */
+#sidebar.sidebar-collapsed .nav-item:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.25);
+  background: rgba(59, 130, 246, 0.15) !important;
 }
 
 .uplink-bar {
